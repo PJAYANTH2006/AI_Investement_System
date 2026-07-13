@@ -73,19 +73,26 @@ export default function App() {
         body: JSON.stringify({ companyName }),
       });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        setActiveReport(data);
-        setActiveReportId(data.id);
-        // Refresh the sidebar history list
-        await fetchHistory();
-      } else {
-        setResearchError(data.error || 'Failed to complete research analysis.');
+      if (!res.ok) {
+        let errorMsg = 'Failed to complete research analysis.';
+        try {
+          const data = await res.json();
+          errorMsg = data.error || errorMsg;
+        } catch (_) {
+          errorMsg = `Server error (Status ${res.status}): ${res.statusText || 'Unable to parse server response.'}`;
+        }
+        setResearchError(errorMsg);
+        return;
       }
+
+      const data = await res.json();
+      setActiveReport(data);
+      setActiveReportId(data.id);
+      // Refresh the sidebar history list
+      await fetchHistory();
     } catch (err) {
       console.error('Error executing research request:', err);
-      setResearchError('Network error connecting to research agent. Please verify server status.');
+      setResearchError(`Network error connecting to research agent. Details: ${err.message || 'Please verify server status.'}`);
     } finally {
       setIsResearching(false);
     }
