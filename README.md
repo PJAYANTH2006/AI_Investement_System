@@ -1,5 +1,7 @@
 # AI Investment Research Agent
 
+🌐 **Live Demo**: [https://ai-investement-system.vercel.app](https://ai-investement-system.vercel.app)
+
 An advanced, end-to-end AI agent that conducts deep equity research on any company, fetches real-time financial metrics and news, and outputs a professional investment recommendation (INVEST, HOLD, or PASS) with a detailed analytical thesis.
 
 Developed with **React (Vite)**, **Node.js (Express)**, **LangGraph.js**, **Tavily Search API**, **Yahoo Finance API**, **Google Gemini 2.5 Flash**, and **PostgreSQL**.
