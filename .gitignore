@@ -4,6 +4,8 @@ frontend/node_modules/
 frontend/dist/
 backend/.env
 .env
+.env.local
+.env.*
 backend/db.json
 db.json
 ai_investment_research_agent.zip
