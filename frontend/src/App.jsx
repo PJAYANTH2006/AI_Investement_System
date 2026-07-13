@@ -25,7 +25,7 @@ export default function App() {
   const fetchHistory = async () => {
     setIsLoadingHistory(true);
     try {
-      const res = await fetch('/api/history');
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/history`);
       if (res.ok) {
         const data = await res.json();
         setHistory(data);
@@ -43,7 +43,7 @@ export default function App() {
     if (activeReportId === id && activeReport) return;
     
     try {
-      const res = await fetch(`/api/report/${id}`);
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/report/${id}`);
       if (res.ok) {
         const data = await res.json();
         setActiveReport(data);
@@ -65,7 +65,7 @@ export default function App() {
     setActiveReportId(null);
 
     try {
-      const res = await fetch('/api/research', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/research`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
