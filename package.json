@@ -1,0 +1,19 @@
+{
+  "name": "ai-investment-research-agent",
+  "version": "1.0.0",
+  "description": "AI-powered investment research agent using LangGraph, Tavily, Yahoo Finance, and Gemini.",
+  "scripts": {
+    "install:backend": "npm install --prefix backend --legacy-peer-deps",
+    "install:frontend": "npm install --prefix frontend --legacy-peer-deps",
+    "install-all": "npm run install:backend && npm run install:frontend",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "start:backend": "npm start --prefix backend",
+    "start:frontend": "npm run build --prefix frontend && npm run preview --prefix frontend",
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
