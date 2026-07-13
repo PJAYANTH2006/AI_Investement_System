@@ -23,7 +23,6 @@ This application automates the research workflow of a venture capital or equity 
 ### Prerequisites
 - **Node.js** (v18.0.0 or higher)
 - **npm** (v9.0.0 or higher)
-- **PostgreSQL** service running locally (default port: `5432`)
 
 ### 1. Install Dependencies
 Run the bootstrapping script in the root directory. This will install packages in the root, frontend, and backend folders concurrently:
@@ -31,30 +30,63 @@ Run the bootstrapping script in the root directory. This will install packages i
 npm run install-all
 ```
 
-### 2. Environment Variables Configuration
-Create a `.env` file in the `backend/` directory based on the `.env.example` template:
-```bash
-cp backend/.env.example backend/.env
-```
-Open `backend/.env` and supply your credentials:
+### 2. Database & Environment Configuration
+
+You can run the database locally or connect to the cloud using Neon.
+
+#### Option A: Local Database
+1. Make sure PostgreSQL is running locally on port `5432`.
+2. Create a database named `ai_investment_research`.
+3. Create a `.env` file in the `backend/` directory from the template:
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
+4. Set the `DATABASE_URL` in `backend/.env`:
+   ```env
+   DATABASE_URL=postgresql://postgres:password@localhost:5432/ai_investment_research
+   ```
+
+#### Option B: Cloud Database (Neon)
+This project is pre-configured with **Neon** context mapping:
+1. Run `npx neonctl@latest init` to link your local project to your Neon account.
+2. The environment variables will be pulled automatically into `.env.local`. Copy the `DATABASE_URL` from `.env.local` to your `backend/.env` file.
+   *Example:*
+   ```env
+   DATABASE_URL=postgresql://neondb_owner:password@ep-sweet-surf-aofcapdd.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require
+   ```
+
+### 3. Supply API Keys
+Open `backend/.env` and supply your API keys:
 ```env
-# Google Gemini API Key
-GOOGLE_API_KEY=AIzaSy...
-
-# Tavily Search API Key
-TAVILY_API_KEY=tvly-...
-
-# PostgreSQL Connection URL
-# Note: The database and tables will be auto-created on startup!
-DATABASE_URL=postgresql://postgres:password@localhost:5432/ai_investment_research
+GOOGLE_API_KEY=AIzaSy...   # Google Gemini API Key
+TAVILY_API_KEY=tvly-...    # Tavily Search API Key
 ```
 
-### 3. Run the Servers Concurrently
+### 4. Run the Servers Concurrently
 Start both the Express backend (port `3001`) and the Vite React frontend (port `5173`) in one command:
 ```bash
 npm run dev
 ```
 Open **[http://localhost:5173](http://localhost:5173)** in your browser.
+
+---
+
+## 🌐 Production Deployment (Vercel & Render)
+
+The project is structured and optimized for production deployment:
+1. **Database**: Hosted on **Neon** (or any cloud PostgreSQL provider).
+2. **Backend (Express API)**: Hosted on **Render** or **Railway** (to support long-running LangGraph queries without Vercel's 10s Serverless execution limit).
+   - *Render Setup*: Set Root Directory as `backend`. Add `DATABASE_URL`, `GOOGLE_API_KEY`, `TAVILY_API_KEY`, and `NODE_ENV=production` as environment variables.
+3. **Frontend (Vite App)**: Hosted on **Vercel** (static web app hosting).
+   - *Vercel Setup*: Set Root Directory as `frontend`. Add the environment variable `VITE_API_URL` pointing to your deployed Render backend (e.g., `https://your-backend.onrender.com`).
+
+---
+
+## 💬 LLM Pair-Programming Chat Transcript (BONUS)
+
+As mandated by the assignment guidelines, this project was developed in partnership with a Gemini AI assistant.
+- **The complete conversation history containing all prompts, thought processes, decisions, and command logs is compiled and saved in:**
+  👉 **[logs/chat_transcript.md](file:///c:/Users/ASUS/OneDrive/Desktop/AI%20Investment%20Research%20Agent/logs/chat_transcript.md)**
 
 ---
 

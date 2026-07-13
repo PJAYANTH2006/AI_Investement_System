@@ -9,7 +9,6 @@ backend/.env
 backend/db.json
 db.json
 ai_investment_research_agent.zip
-logs/
 *.log
 .vscode/
 .DS_Store
