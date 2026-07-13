@@ -18,6 +18,11 @@ app.use(express.json());
 
 // Routes
 
+// Health check endpoint for Render monitoring
+app.get('/healthz', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // 1. Run research workflow for a company name
 app.post('/api/research', async (req, res) => {
   const { companyName } = req.body;
